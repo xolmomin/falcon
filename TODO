@@ -1,0 +1,22 @@
+1)admin : product image
+
+
+
+admin (edit)
+    author (+delete)
+
+
+client (view)
+
+
+product ga is_premium field qoshiladi
+
+
+
+
+
+celery
+redis
+
+elasticsearch
+

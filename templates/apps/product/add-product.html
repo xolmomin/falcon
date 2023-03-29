@@ -1,0 +1,66 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block main_content %}
+    <div class="container-fluid">
+        <div class="container">
+            <form class="row g-3" method="post" action="{% url 'add_product' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="col-md-4">
+                    <label class="form-label" for="inputTitle">Product name</label>
+                    <input class="form-control" id="inputTitle" type="text" name="title"/>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="inputPrice">Price</label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" id="inputPrice" name="price"
+                               aria-label="Dollar amount (with dot and two decimal places)"/>
+                        <span class="input-group-text">$</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="inputDiscount">Discount</label>
+                    <input class="form-control" id="inputDiscount" type="number" name="discount"/>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="inputQuantity">Quantity</label>
+                    <input class="form-control" id="inputQuantity" type="number" name="quantity"/>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="inputShippingCost">Shipping Cost</label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" id="inputShippingCost" name="price"
+                               aria-label="Dollar amount (with dot and two decimal places)"/>
+                        <span class="input-group-text">$</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="inputTag">Images</label>
+                    <input class="form-control" id="inputTag" type="file" multiple name="images"/>
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label" for="basic-form-textarea">Description</label>
+                    <textarea class="form-control" id="basic-form-textarea" rows="3" name="description">
+                    </textarea>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="inputState">Tags</label>
+                    <select class="form-select" id="inputState">
+                        <option selected="selected">Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12">
+                    <button class="btn btn-primary" type="submit">Add</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
