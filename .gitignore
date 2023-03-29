@@ -113,6 +113,6 @@ dmypy.json
 .pytype/
 cython_debug/
 venv
-
+.idea/*
 .idea
 .idea/
