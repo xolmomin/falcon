@@ -94,3 +94,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'muhammadbilol550@gmail.com'
+EMAIL_HOST_PASSWORD = 'gtwqyvgfzioxmgxb'
+
+# EMAIL_HOST_USER = 'ibrohimjon.abis.85@gmail.com'
+# EMAIL_HOST_PASSWORD = 'flxehkcggowcifns'
+# 10.10.2.55
