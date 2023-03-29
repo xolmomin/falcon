@@ -39,6 +39,12 @@ class Product(models.Model):
     def discount_price(self):
         return self.price - self.price * self.discount // 100
 
+
 class ProductImage(models.Model):
-    product = models.ForeignKey('apps.Product', models.CASCADE)
+    product = models.ForeignKey('apps.Product', models.CASCADE, 'images')
     image = models.ImageField(upload_to='product/images/')
+
+
+class Wishlist(models.Model):
+    product = models.ForeignKey('apps.Product', models.CASCADE)
+    user = models.ForeignKey('apps.User', models.CASCADE)

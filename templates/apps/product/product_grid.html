@@ -1,5 +1,6 @@
 {% extends 'apps/base.html' %}
 {% load static %}
+{% load wishlist %}
 
 {% block title %}
     Product list
@@ -63,7 +64,8 @@
                                     </div>
                                     <div class="col-lg-4 d-flex justify-content-between flex-column">
                                         <div>
-                                            <h4 class="fs-1 fs-md-2 text-warning mb-0">${{ product.discount_price }}</h4>
+                                            <h4 class="fs-1 fs-md-2 text-warning mb-0">
+                                                ${{ product.discount_price }}</h4>
                                             <h5 class="fs--1 text-500 mb-0 mt-1">
                                                 <del>${{ product.price }}</del>
                                                 <span class="ms-1">-{{ product.discount }}%</span>
@@ -74,7 +76,7 @@
                                                     class="fa fa-star text-warning"></span><span
                                                     class="fa fa-star text-warning"></span><span
                                                     class="fa fa-star text-300"></span><span
-                                                    class="ms-1">({{ product.quantity }})</span>
+                                                    class="ms-1">(15)</span>
                                             </div>
                                             <div class="d-none d-lg-block">
                                                 <p class="fs--1 mb-1">Shipping Cost:
@@ -88,13 +90,18 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="mt-2"><a
-                                                class="btn btn-sm btn-outline-secondary border-300 d-lg-block me-2 me-lg-0"
-                                                href="#!"><span class="far fa-heart"></span><span
-                                                class="ms-2 d-none d-md-inline-block">Favourite</span></a><a
-                                                class="btn btn-sm btn-primary d-lg-block mt-lg-2" href="#!"><span
-                                                class="fas fa-cart-plus"> </span><span
-                                                class="ms-2 d-none d-md-inline-block">Add to Cart</span></a></div>
+                                        <div class="mt-2">
+                                            <a class="btn btn-sm btn-{% if user|check_wishlist:product %}danger{% else %}outline-secondary{% endif %} border-300 d-lg-block me-2 me-lg-0"
+                                               href="{% url 'add_wishlist' product.pk %}">
+                                                <span class="far fa-heart"></span>
+                                                <span class="ms-2 d-none d-md-inline-block">Favourite</span>
+                                            </a>
+                                            <a class="btn btn-sm btn-primary d-lg-block mt-lg-2" href="#!">
+                                                <span class="fas fa-cart-plus"> </span>
+                                                <span class="ms-2 d-none d-md-inline-block">Add to Cart</span>
+                                            </a>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>

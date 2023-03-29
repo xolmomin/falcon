@@ -11,7 +11,9 @@ client (view)
 
 product ga is_premium field qoshiladi
 
-
++
+class based
+celery + redis
 
 
 
