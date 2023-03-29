@@ -1,12 +1,24 @@
+from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView
 from django.urls import path
-from apps.views import add_product, register, login_page, logout_page, forgot, product_list, product_detail
+
+from apps.views import add_product, register, ProductList, AddWishlist, \
+    ProductDetailView
 
 urlpatterns = [
-    path('', product_list, name='product_list'),
-    path('product_detail/<int:pk>', product_detail, name='product_detail'),
+    path('', ProductList.as_view(), name='product_list'),
+    path('product-detail/<int:pk>', ProductDetailView.as_view(), name='product_detail'),
+    path('wishlist/<int:pk>', AddWishlist.as_view(), name='add_wishlist'),
     path('add_product', add_product, name='add_product'),
+
     path('register', register, name='register'),
-    path('login', login_page, name='login_page'),
-    path('logout', logout_page, name='logout_page'),
-    path('forgot', forgot, name='forgot'),
+    path('login', LoginView.as_view(
+        next_page='product_list',
+        template_name='apps/auth/login.html',
+    ), name='login_page'),
+    path('logout', LogoutView.as_view(
+        next_page='product_list'
+    ), name='logout_page'),
+    path('password-reset', PasswordResetView.as_view(
+        template_name='apps/auth/password_reset.html'
+    ), name='password_reset'),
 ]
