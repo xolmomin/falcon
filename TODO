@@ -11,8 +11,13 @@ client (view)
 
 product ga is_premium field qoshiladi
 
-+
-class based
+
+TASK
+1) add product
+2) permission for product only remove by author
+3) My product page
+4) vip_client can see is_premium products
+
 celery + redis
 
 
