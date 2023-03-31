@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
 
 from apps.forms import UsersCreationForm, ProductForm
-from apps.models import Product, ProductImage, Wishlist, Tag, User, CartItem
+from apps.models import Product, ProductImage, Wishlist, Tag, User, CartItem, Cart
 
 
 def register(request):
@@ -64,19 +64,41 @@ def add_product(request):
     return render(request, 'apps/product/add-product.html', {'tags': tags})
 
 
-@permission_required('apps.add_product')
-def product_delete(request, pk):
-    user = request.user
-    article = Product.objects.get(id=pk)
-    if user == article.author:
-        if request.method == "POST":
-            article.delete()
-            return redirect('/')
-        return render(request, 'apps/product/product_detail.html', {"article": article})
-    else:
-        return HttpResponse("Not allowed")
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = '/'
+
+
+# @permission_required('apps.add_product')
+# def product_delete(request, pk):
+#     user = request.user
+#     article = Product.objects.get(id=pk)
+#     if user == article.author:
+#         if request.method == "POST":
+#             article.delete()
+#             return redirect('/')
+#         return render(request, 'apps/product/product_detail.html', {"article": article})
+#     else:
+#         return HttpResponse("Not allowed")
+
+
+class AddCartCreateView(LoginRequiredMixin, View):
+    def get(self, request, pk=None):
+        product = get_object_or_404(Product, pk=pk)
+        cart, created = Cart.objects.get_or_create(user=request.user, is_active=True)
+        CartItem.objects.create(
+            product=product,
+            price=product.price,
+            cart=cart
+        )
+        return redirect('product_list')
 
 
 class ShowCart(ListView):
     queryset = CartItem.objects.all()
     template_name = 'apps/product/shopping-cart.html'
+    context_object_name = 'cart_items'
+
+    def get_queryset(self):
+        cart = Cart.objects.filter(user=self.request.user, is_active=True).first()
+        return CartItem.objects.filter(cart=cart)

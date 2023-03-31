@@ -337,8 +337,9 @@
                                 </div>
                                 {% if user == product.author %}
                                     <form id="article-form" action="{% url 'product_delete' product.id %}"
-                                          method="post">{% csrf_token %}
-                                        <p> </p>
+                                          method="post">
+                                        {% csrf_token %}
+                                        <p></p>
                                         <button data-redirect="home/" id="submitButton" type="submit"
                                                 class="btn btn-danger"> Delete
                                         </button>

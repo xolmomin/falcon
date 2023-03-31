@@ -1,10 +1,15 @@
 
 TASK
 
-3) My product page
+0) pagination
+1) cart sahifasida product ni rasmlari chiqadigan qilish kk
+2) checkout page ni qilish kk
+3) Order model logikasini korib chiqish
+4) my product page (admin author uchun)
+5) comment qoldirish product detailda
 
 celery + redis
-
+ajax
 
 
 celery

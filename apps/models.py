@@ -19,6 +19,12 @@ class User(AbstractUser):
     status = models.CharField(max_length=50, choices=Status.choices, default=Status.CLIENT)
     email = models.EmailField(unique=True)
 
+    @property
+    def cart_count(self):
+        cart = self.cart_set.filter(is_active=True).first()
+        if cart:
+            return cart.cartitem_set.count()
+        return 0
 
 
 class Tag(models.Model):
@@ -63,12 +69,20 @@ class Cart(BaseModel):
     user = models.ForeignKey('apps.User', models.CASCADE)
     is_active = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ('user', 'is_active')
+
+    @property
+    def total_summa(self):
+        items = self.cartitem_set.values_list('price', 'quantity')
+        return sum(map(lambda i: i[0] * i[1], items))
+
 
 class CartItem(BaseModel):
     product = models.ForeignKey('apps.Product', models.CASCADE)
     cart = models.ForeignKey('apps.Cart', models.CASCADE)
     price = models.IntegerField()
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(default=1)
 
 # class Order(BaseModel):
 #     class Status(models.TextChoices):

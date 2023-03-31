@@ -9,7 +9,7 @@
         <div class="card-header">
             <div class="row justify-content-between">
                 <div class="col-md-auto">
-                    <h5 class="mb-3 mb-md-0">Shopping Cart ({{ object_list.count }} Items)</h5>
+                    <h5 class="mb-3 mb-md-0">Shopping Cart ({{ cart_items.count }} Items)</h5>
                 </div>
                 <div class="col-md-auto">
                     <a class="btn btn-sm btn-outline-secondary border-300 me-2"
@@ -42,16 +42,18 @@
                     </div>
                 </div>
             </div>
-            {% for object in object_list %}
+            {% for cart_item in cart_items %}
                 <div class="row gx-card mx-0 align-items-center border-bottom border-200">
                     <div class="col-8 py-3">
                         <div class="d-flex align-items-center">
                             <div class="flex-1">
                                 <h5 class="fs-0">
-                                    <a class="text-900"
-                                       href="../../app/e-commerce/product/product-details.html">{{ object.product }}</a>
+                                    <a class="text-900" href="{% url 'product_detail' cart_item.pk %}">
+                                        {{ cart_item.product.title }}
+                                    </a>
                                 </h5>
-                                <div class="fs--2 fs-md--1"><a class="text-danger" href="#!">Remove</a></div>
+                                <div class="fs--2 fs-md--1">
+                                    <a class="text-danger" href="#!">Remove</a></div>
                             </div>
                         </div>
                     </div>
@@ -66,7 +68,7 @@
                                         </button>
                                         <input class="form-control text-center px-2 input-spin-none" type="number"
                                                min="1"
-                                               value="1" aria-label="Amount (to the nearest dollar)"
+                                               value="{{ cart_item.quantity }}" aria-label="Amount (to the nearest dollar)"
                                                style="width: 50px">
                                         <button class="btn btn-sm btn-outline-secondary border-300 px-2"
                                                 data-type="plus">
@@ -76,7 +78,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 text-end ps-0 order-0 order-md-1 mb-2 mb-md-0 text-600">
-                                ${{ object.price }}</div>
+                                ${{ cart_item.price }}</div>
                         </div>
                     </div>
                 </div>
@@ -85,8 +87,8 @@
                 <div class="col-9 col-md-8 py-2 text-end text-900">Total</div>
                 <div class="col px-0">
                     <div class="row gx-card mx-0">
-                        <div class="col-md-8 py-2 d-none d-md-block text-center">{{ object_list.count }} (items)</div>
-                        <div class="col-12 col-md-4 text-end py-2">$8516</div>
+                        <div class="col-md-8 py-2 d-none d-md-block text-center">{{ cart_items.count }} (items)</div>
+                        <div class="col-12 col-md-4 text-end py-2">${{ cart_items.first.cart.total_summa }}</div>
                     </div>
                 </div>
             </div>
@@ -98,7 +100,7 @@
                     <button class="btn btn-outline-secondary border-300 btn-sm" type="submit">Apply</button>
                 </div>
             </form>
-            <a class="btn btn-sm btn-primary" href="../../app/e-commerce/checkout.html">Checkout</a>
+            <a class="btn btn-sm btn-primary" href="#">Checkout</a>
         </div>
     </div>
 {% endblock %}
