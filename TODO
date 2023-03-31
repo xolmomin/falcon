@@ -9,8 +9,8 @@
 
 TASK
 
+2) vip_client can see is_premium products
 3) My product page
-4) vip_client can see is_premium products
 
 celery + redis
 
