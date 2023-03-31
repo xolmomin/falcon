@@ -6,7 +6,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 
 from apps.forms import UsersCreationForm, ProductForm
-from apps.models import Product, ProductImage, Wishlist, Tag, User
+from apps.models import Product, ProductImage, Wishlist, Tag, User, CartItem
 
 
 def register(request):
@@ -75,3 +75,8 @@ def product_delete(request, pk):
         return render(request, 'apps/product/product_detail.html', {"article": article})
     else:
         return HttpResponse("Not allowed")
+
+
+class ShowCart(ListView):
+    queryset = CartItem.objects.all()
+    template_name = 'apps/product/shopping-cart.html'

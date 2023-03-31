@@ -32,8 +32,10 @@ class TagAdmin(admin.ModelAdmin):
 
 
 @admin.register(User)
-class TagAdmin(UserAdmin):
-    pass
+class UserAdmin(UserAdmin):
+    list_display = ('status','email')
+
+
 
 
 @admin.register(ProductImage)

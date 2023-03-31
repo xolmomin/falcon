@@ -20,6 +20,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
 
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=255)
 
