@@ -1,14 +1,11 @@
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LogoutView, PasswordResetView
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import ListView, DetailView
-
 from apps.forms import UsersCreationForm, ProductForm
-from apps.models import Product, ProductImage, Wishlist
+from apps.models import Product, ProductImage, Wishlist, Tag
 
 
 def register(request):
@@ -58,10 +55,10 @@ class ProductList(ListView):
     template_name = 'apps/product/product_grid.html'
     context_object_name = 'products'
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(object_list=object_list, **kwargs)
-    #     context['name'] = 'Botirjon'
-    #     return context
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['product_count'] = self.queryset.count()
+        return context
 
 
 # def product_list(request):
@@ -89,6 +86,7 @@ class ProductDetailView(DetailView):
 
 @permission_required('apps.add_product')
 def add_product(request):
+    tags = Tag.objects.all()
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
@@ -98,4 +96,19 @@ def add_product(request):
                 ProductImage.objects.create(image=image, product=product)
 
         return redirect('/')
-    return render(request, 'apps/product/add-product.html')
+    return render(request, 'apps/product/add-product.html', {'tags': tags})
+
+
+
+
+@permission_required('apps.add_product')
+def product_delete(request, pk):
+    user = request.user
+    article = Product.objects.get(id=pk)
+    if user == article.author:
+        if request.method == "POST":
+            article.delete()
+            return redirect('/')
+        return render(request, 'apps/product/product_detail.html', {"article":article})
+    else:return HttpResponse("Not allowed")
+

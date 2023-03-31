@@ -1,20 +1,14 @@
 1)admin : product image
+2)client (view)
+3)admin (edit) author (+delete)
+4)add product
 
 
 
-admin (edit)
-    author (+delete)
-
-
-client (view)
-
-
-product ga is_premium field qoshiladi
 
 
 TASK
-1) add product
-2) permission for product only remove by author
+
 3) My product page
 4) vip_client can see is_premium products
 

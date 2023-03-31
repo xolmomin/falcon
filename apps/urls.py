@@ -4,7 +4,7 @@ from django.urls import path
 from django.conf.urls.static import static
 
 from apps.views import add_product, register, ProductList, AddWishlist, \
-    ProductDetailView
+    ProductDetailView, product_delete
 from core import settings
 
 urlpatterns = [
@@ -40,6 +40,10 @@ urlpatterns += [
     # path('password-confirm', PasswordResetCompleteView.as_view(
     #     template_name='apps/auth/password_reset_done.html'
     # ), name='password_confirm'),
+
+
+    path('product-delete/<int:pk>',product_delete,name='product_delete'),
+
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
                static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
