@@ -2,6 +2,14 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+class BaseModel(models.Model):
+    updated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
 class User(AbstractUser):
     class Status(models.TextChoices):
         ADMIN = 'admin', 'Admin'
@@ -19,7 +27,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Product(models.Model):
+class Product(BaseModel):
     title = models.CharField(max_length=255)
     price = models.IntegerField()
     short_description = models.TextField()
@@ -48,3 +56,26 @@ class ProductImage(models.Model):
 class Wishlist(models.Model):
     product = models.ForeignKey('apps.Product', models.CASCADE)
     user = models.ForeignKey('apps.User', models.CASCADE)
+
+
+class Cart(BaseModel):
+    user = models.ForeignKey('apps.User', models.CASCADE)
+    is_active = models.BooleanField(default=False)
+
+
+class CartItem(BaseModel):
+    product = models.ForeignKey('apps.Product', models.CASCADE)
+    cart = models.ForeignKey('apps.Cart', models.CASCADE)
+    price = models.IntegerField()
+    quantity = models.IntegerField()
+
+# class Order(BaseModel):
+#     class Status(models.TextChoices):
+#         CREATED = 'created', 'yaratilgan'
+#         WAITING = 'waiting', 'tolanayotgan'
+#         PAID = 'paid', 'tolangan'
+#         CANCELLED = 'cancelled', 'bekor qilingan'
+#
+#     cart = models.OneToOneField('apps.Cart', models.CASCADE)
+#     user = models.ForeignKey('apps.User', models.CASCADE)
+#     status = models.CharField(max_length=25, choices=Status.choices, default=Status.CREATED)

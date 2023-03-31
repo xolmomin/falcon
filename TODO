@@ -1,15 +1,6 @@
-1)admin : product image
-2)client (view)
-3)admin (edit) author (+delete)
-4)add product
-
-
-
-
 
 TASK
 
-2) vip_client can see is_premium products
 3) My product page
 
 celery + redis
