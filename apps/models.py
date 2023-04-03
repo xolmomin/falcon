@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from mptt.fields import TreeForeignKey
+from mptt.models import MPTTModel
 
 
 class BaseModel(models.Model):
@@ -34,9 +36,9 @@ class Tag(models.Model):
         return self.name
 
 
-class Category(models.Model):
+class Category(MPTTModel):
     name = models.CharField(max_length=255)
-    parent = models.ForeignKey('self', models.CASCADE, null=True, blank=True)
+    parent = TreeForeignKey('self', models.CASCADE, null=True, blank=True)
     slug = models.SlugField(max_length=255, unique=True)
 
     def __str__(self):

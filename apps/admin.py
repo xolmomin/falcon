@@ -11,8 +11,9 @@ from django.urls import path
 from django.utils.html import format_html
 from import_export.admin import ImportExportModelAdmin
 from import_export.resources import ModelResource
+from mptt.admin import DraggableMPTTAdmin
 
-from apps.models import Product, Tag, ProductImage, User
+from apps.models import Product, Tag, ProductImage, User, Category
 
 
 class ProductImagesInline(StackedInline):
@@ -74,6 +75,11 @@ class TagAdmin(ImportExportModelAdmin):
 @admin.register(User)
 class UserAdmin(UserAdmin):
     list_display = ('status', 'email')
+
+
+@admin.register(Category)
+class CategoryAdmin(DraggableMPTTAdmin):
+    pass
 
 
 @admin.register(ProductImage)

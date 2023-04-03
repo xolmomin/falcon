@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'apps',
     'crispy_forms',
     'import_export',
+    'mptt',
 ]
 
 MIDDLEWARE = [
