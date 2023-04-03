@@ -34,6 +34,15 @@ class Tag(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    parent = models.ForeignKey('self', models.CASCADE, null=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(BaseModel):
     title = models.CharField(max_length=255)
     price = models.IntegerField()
@@ -44,6 +53,7 @@ class Product(BaseModel):
     is_premium = models.BooleanField(default=False)
     shopping_cost = models.SmallIntegerField(default=0)
     tags = models.ForeignKey('apps.Tag', models.CASCADE, blank=True, default=1)
+    category = models.ForeignKey('apps.Category', models.CASCADE)
     specification = models.JSONField(default=dict, blank=True)
     author = models.ForeignKey('apps.User', models.CASCADE)
 

@@ -114,3 +114,6 @@ dmypy.json
 cython_debug/
 venv
 .idea
+
+
+static/
