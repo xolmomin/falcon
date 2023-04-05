@@ -17,3 +17,18 @@ redis
 
 elasticsearch
 
+
+
+
+
+django
+celery
+redis (cache)
+rabbitmq (message broker)
+postgresql (storage)
+
+
+
+
+
+

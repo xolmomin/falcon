@@ -67,6 +67,13 @@ class Product(BaseModel):
         return self.price - self.price * self.discount // 100
 
 
+class ProductProxy(Product):
+    class Meta:
+        proxy = True
+        verbose_name = 'Special product'
+        verbose_name_plural = 'Special products'
+
+
 class ProductImage(models.Model):
     product = models.ForeignKey('apps.Product', models.CASCADE, 'images')
     image = models.ImageField(upload_to='product/images/')
